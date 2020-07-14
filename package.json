@@ -1,0 +1,21 @@
+{
+  "name": "authentication-flow-react-component",
+  "version": "1.0.0",
+  "description": "React component for authentication",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.netspective.io:information-governance-suite/authentication/authentication-flow-react-component.git"
+  },
+  "keywords": [
+    "authentication-flow-react-component"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  }
+}
