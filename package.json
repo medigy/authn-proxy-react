@@ -1,21 +1,28 @@
 {
-  "name": "authentication-flow-react-component",
+  "name": "authn-proxy-react",
   "version": "1.0.0",
-  "description": "React component for authentication",
+  "description": "Medigy login proxy for React apps",
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "repository": {
     "type": "git",
-    "url": "git@git.netspective.io:information-governance-suite/authentication/authentication-flow-react-component.git"
+    "url": "git+https://github.com/medigy/authn-proxy-react.git"
   },
   "keywords": [
-    "authentication-flow-react-component"
+    "authn-proxy-react"
   ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "typescript": "^3.9.6"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/medigy/authn-proxy-react/issues"
+  },
+  "homepage": "https://github.com/medigy/authn-proxy-react#readme"
 }
