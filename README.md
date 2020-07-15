@@ -4,16 +4,16 @@
 
 ---
 
-Clone component from [Authentication flow react component git repository](https://git.netspective.io/information-governance-suite/authentication/authentication-flow-react-component).
+Clone component from [Authentication proxy react git repository](https://github.com/medigy/authn-proxy-react).
 
 ```bash
-    git clone git@git.netspective.io:information-governance-suite/authentication/authentication-flow-react-component.git
+    git clone https://github.com/medigy/authn-proxy-react.git
 ```
 
 Add component to the react project as a dependency using npm
 
 ```bash
-    npm install path_to\authentication-flow-react-component
+    npm install path_to\authn-proxy-react
 ```
 
 ## Functions
