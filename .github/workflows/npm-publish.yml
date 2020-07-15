@@ -1,4 +1,4 @@
-name: npm-publish
+name: node-publish
 on:
   push:
     branches:
