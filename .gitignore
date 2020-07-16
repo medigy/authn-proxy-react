@@ -36,6 +36,7 @@ node_modules/
 npm-debug.log
 yarn-error.log
 userInfo.json
+.npmrc
 
 # BUCK
 buck-out/
@@ -58,3 +59,4 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
