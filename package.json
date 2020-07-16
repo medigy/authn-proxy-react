@@ -1,5 +1,5 @@
 {
-  "name": "authn-proxy-react",
+  "name": "@medigy/authn-proxy-react",
   "version": "1.0.0",
   "description": "Medigy login proxy for React apps",
   "main": "index.tsx",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/medigy"
   },
   "repository": {
     "type": "git",

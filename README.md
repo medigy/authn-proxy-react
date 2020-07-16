@@ -1,4 +1,4 @@
-# Authentication Flow React Component
+# Authentication Proxy React
 
 ## Installation
 
