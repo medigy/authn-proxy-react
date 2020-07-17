@@ -2,4 +2,4 @@ export {
   netspectiveAuthLogin,
   netspectiveAuthRefreshToken,
 } from "./NetspectiveAuthComponent";
-export {AuthnProxyReactProvider} from "./Provider"
+// export {AuthnProxyReactProvider} from "./Provider"
