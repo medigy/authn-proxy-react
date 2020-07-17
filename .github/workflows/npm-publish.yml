@@ -17,5 +17,9 @@ jobs:
         scope: '@octocat'
     - name: Publish if version has been updated
       uses: houtianze/npm-publish-action@master
+      with: # All of theses inputs are optional
+        tag_name: "v%s"
+        tag_message: "v%s"
+        commit_pattern: "^(?:Release|Version) (\\S+)"      
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
