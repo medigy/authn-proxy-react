@@ -1,4 +1,4 @@
-name: node-publish
+name: Medigy-publish
 on:
   push:
     branches:
@@ -15,7 +15,7 @@ jobs:
         registry-url: 'https://npm.pkg.github.com'
         # Defaults to the user or organization that owns the workflow file
         scope: '@octocat'
-    - run: npm install
-    - run: npm publish
+    - name: Publish if version has been updated
+      uses: houtianze/npm-publish-action@master
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
