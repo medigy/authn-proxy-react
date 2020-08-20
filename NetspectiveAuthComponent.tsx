@@ -82,3 +82,13 @@ export const netspectiveAuthRefreshToken = () => {
       }
     });
 };
+
+export const netspectiveAuthLogout = () => {
+  localStorage.setItem("token", "");
+  localStorage.setItem("id_token", "");
+  localStorage.setItem("refresh_token", "");
+  return {
+    status: 200,
+    message: "logout_successful",
+  };
+}

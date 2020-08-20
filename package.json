@@ -1,6 +1,6 @@
 {
   "name": "@medigy/authn-proxy-react",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Medigy login proxy for React apps",
   "main": "index.tsx",
   "scripts": {
