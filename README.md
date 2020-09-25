@@ -16,26 +16,63 @@ Add component to the react project as a dependency using npm
     npm install path_to\authn-proxy-react
 ```
 
+OR
+
+Create .npmrc file in project root and add the github package registry code given below.
+
+```bash
+    //npm.pkg.github.com/:_authToken= [Personal Access Token]
+    @medigy:registry=https://npm.pkg.github.com
+```
+
+Then, run command
+
+```bash
+    npm install @medigy/authn-proxy-react
+```
+
 ## Functions
 
-#### 1. netspectiveAuthLogin ( )
+#### 1. netspectiveAuthentication ( )
 
-For authenticating user using git lab.
+For authenticating user using gitlab.
 
 ```javascript
-netspectiveAuthLogin(username, password).then((response) => {
+netspectiveAuthentication(parms).then((response) => {
   console.log(response);
 });
 ```
 
-#### 2. netspectiveAuthRefreshToken ( )
-
-When ever an unauthorized or forbidden error occurs, use netspectiveAuthRefreshToken ( ).
+parms is an object with following keys.
 
 ```javascript
-netspectiveAuthRefreshToken().then((response) => {
-  console.log(response);
-});
+parms = {
+      username : values.username,
+      password : values.password,
+      authProvider : '',
+      type : 'login'
+    }
 ```
 
+| Key          | Value                                                                                                            | Use Case              |
+|--------------|------------------------------------------------------------------------------------------------------------------|-----------------------|
+| username     | login username                                                                                                   | for login only        |
+| password     | login password                                                                                                   | for login only        |
+| authProvider | specify auth provider. ie. 'gitlab' , 'keyclock'. If we need to authenticate with keyclock and gitlab, pass ' '. | for login and refresh |
+| type         | 'login', 'refresh'                                                                                               | for login and refresh |
+
+When ever an unauthorized or forbidden error occurs, use netspectiveAuthentication ( ) with refresh type.
 After authenticating or refreshing token, the functions sets or update id_token, access_token, refresh_token in local storage and returns a response object which holds the status and a message.
+
+
+#### 2. netspectiveAuthLogout ( )
+
+For Logout,
+
+```javascript
+netspectiveAuthLogout().then((response) => {
+  console.log(response);
+});
+```
+
+
