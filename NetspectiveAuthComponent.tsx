@@ -16,6 +16,7 @@ export const netspectiveAuthentication = (parms) => {
           urlencoded.append("username", username);
           urlencoded.append("password", password);
           urlencoded.append("grant_type", "password");
+          urlencoded.append("scope", "openid");
           return fetchAction(ConfigGitLab.authUrl, urlencoded).then((responseVal) => {
             if (responseVal.statusText) {
               return Promise.resolve({
@@ -24,6 +25,7 @@ export const netspectiveAuthentication = (parms) => {
               });
             } else {
               localStorage.setItem("access_token", responseVal.access_token);
+              localStorage.setItem("id_token", responseVal.id_token);
               localStorage.setItem("refresh_token", responseVal.refresh_token);
               return Promise.resolve({
                 status: 200,
@@ -40,6 +42,7 @@ export const netspectiveAuthentication = (parms) => {
 
       } else if (type === "refresh") {
         urlencoded.append("grant_type", "refresh_token");
+        urlencoded.append("scope", "openid");
         urlencoded.append(
           "refresh_token",
           localStorage.getItem("refresh_token") || '{}'
@@ -52,6 +55,7 @@ export const netspectiveAuthentication = (parms) => {
             });
           } else {
             localStorage.setItem("access_token", responseVal.access_token);
+            localStorage.setItem("id_token", responseVal.id_token);
             localStorage.setItem("refresh_token", responseVal.refresh_token);
             return Promise.resolve({
               status: 200,
@@ -124,6 +128,7 @@ export const netspectiveAuthentication = (parms) => {
         keyclockUrlEncoded.append("username", username);
         keyclockUrlEncoded.append("password", password);
         urlencoded.append("grant_type", "password");
+        urlencoded.append("scope", "openid");
         keyclockUrlEncoded.append("grant_type", "password");
         return fetchAction(ConfigGitLab.authUrl, urlencoded).then((responseValGit) => {
           if (responseValGit.statusText) {
@@ -133,6 +138,7 @@ export const netspectiveAuthentication = (parms) => {
             });
           } else {
             localStorage.setItem("gitlab_access_token", responseValGit.access_token);
+            localStorage.setItem("gitlab_id_token", responseValGit.id_token);
             localStorage.setItem("gitlab_refresh_token", responseValGit.refresh_token);
             return fetchAction(ConfigKeyClock.authUrl, keyclockUrlEncoded).then((responseValKey) => {
               localStorage.setItem("access_token", responseValKey.access_token);
@@ -152,6 +158,7 @@ export const netspectiveAuthentication = (parms) => {
       }
     } else if (type === "refresh") {
       urlencoded.append("grant_type", "refresh_token");
+      urlencoded.append("scope", "openid");
       urlencoded.append(
         "refresh_token",
         JSON.parse(localStorage.getItem("refresh_token") || '{}')
@@ -169,6 +176,7 @@ export const netspectiveAuthentication = (parms) => {
           });
         } else {
           localStorage.setItem("gitlab_access_token", responseValGit.access_token);
+          localStorage.setItem("gitlab_id_token", responseValGit.id_token);
           localStorage.setItem("gitlab_refresh_token", responseValGit.refresh_token);
           return fetchAction(ConfigKeyClock.authUrl, keyclockUrlEncoded).then((responseValKey) => {
             localStorage.setItem("access_token", responseValKey.access_token);
