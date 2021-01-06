@@ -1,13 +1,13 @@
-import { ConfigGitLab, ConfigKeyClock } from "./webpack.config";
+import { ConfigGitLab, ConfigKeyCloak } from "./webpack.config";
 let responseVal = {};
 export const netspectiveAuthentication = (parms) => {
   // gitlab
   const { username, password, authProvider, type } = parms;
 
   var urlencoded = new URLSearchParams();
-  var keyclockUrlEncoded = new URLSearchParams();
-  keyclockUrlEncoded.append("client_id", "gitlab_openid_connect");
-  keyclockUrlEncoded.append("client_secret", "8d4bf150-b9c6-4a10-8be9-55a4c331b2fb");
+  var keycloakUrlEncoded = new URLSearchParams();
+  keycloakUrlEncoded.append("client_id", ConfigKeyCloak.clientId);
+  keycloakUrlEncoded.append("client_secret", ConfigKeyCloak.clientSecret);
 
   if (authProvider) {
     if (authProvider === "gitlab") {
@@ -66,13 +66,13 @@ export const netspectiveAuthentication = (parms) => {
       } else {
         return Promise.reject();
       }
-    } else if (authProvider === "keyclock") {
+    } else if (authProvider === "keycloak") {
       if (type === "login") {
         if (username && password) {
-          keyclockUrlEncoded.append("username", username);
-          keyclockUrlEncoded.append("password", password);
-          keyclockUrlEncoded.append("grant_type", "password");
-          return fetchAction(ConfigKeyClock.authUrl, keyclockUrlEncoded).then((responseVal) => {
+          keycloakUrlEncoded.append("username", username);
+          keycloakUrlEncoded.append("password", password);
+          keycloakUrlEncoded.append("grant_type", "password");
+          return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseVal) => {
             if (responseVal.statusText) {
               return Promise.resolve({
                 status: responseVal.status,
@@ -94,12 +94,12 @@ export const netspectiveAuthentication = (parms) => {
           });
         }
       } else if (type === "refresh") {
-        keyclockUrlEncoded.append("grant_type", "refresh_token");
-        keyclockUrlEncoded.append(
+        keycloakUrlEncoded.append("grant_type", "refresh_token");
+        keycloakUrlEncoded.append(
           "refresh_token",
           JSON.parse(localStorage.getItem("refresh_token") || '{}')
         );
-        return fetchAction(ConfigKeyClock.authUrl, keyclockUrlEncoded).then((responseVal) => {
+        return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseVal) => {
           if (responseVal.statusText) {
             return Promise.resolve({
               status: responseVal.status,
@@ -125,11 +125,11 @@ export const netspectiveAuthentication = (parms) => {
       if (username && password) {
         urlencoded.append("username", username);
         urlencoded.append("password", password);
-        keyclockUrlEncoded.append("username", username);
-        keyclockUrlEncoded.append("password", password);
+        keycloakUrlEncoded.append("username", username);
+        keycloakUrlEncoded.append("password", password);
         urlencoded.append("grant_type", "password");
         urlencoded.append("scope", "openid");
-        keyclockUrlEncoded.append("grant_type", "password");
+        keycloakUrlEncoded.append("grant_type", "password");
         return fetchAction(ConfigGitLab.authUrl, urlencoded).then((responseValGit) => {
           if (responseValGit.statusText) {
             return Promise.resolve({
@@ -140,7 +140,7 @@ export const netspectiveAuthentication = (parms) => {
             localStorage.setItem("gitlab_access_token", responseValGit.access_token);
             localStorage.setItem("gitlab_id_token", responseValGit.id_token);
             localStorage.setItem("gitlab_refresh_token", responseValGit.refresh_token);
-            return fetchAction(ConfigKeyClock.authUrl, keyclockUrlEncoded).then((responseValKey) => {
+            return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseValKey) => {
               localStorage.setItem("access_token", responseValKey.access_token);
               localStorage.setItem("refresh_token", responseValKey.refresh_token);
               return Promise.resolve({
@@ -163,8 +163,8 @@ export const netspectiveAuthentication = (parms) => {
         "refresh_token",
         JSON.parse(localStorage.getItem("refresh_token") || '{}')
       );
-      keyclockUrlEncoded.append("grant_type", "refresh_token");
-      keyclockUrlEncoded.append(
+      keycloakUrlEncoded.append("grant_type", "refresh_token");
+      keycloakUrlEncoded.append(
         "refresh_token",
         JSON.parse(localStorage.getItem("refresh_token") || '{}')
       );
@@ -178,7 +178,7 @@ export const netspectiveAuthentication = (parms) => {
           localStorage.setItem("gitlab_access_token", responseValGit.access_token);
           localStorage.setItem("gitlab_id_token", responseValGit.id_token);
           localStorage.setItem("gitlab_refresh_token", responseValGit.refresh_token);
-          return fetchAction(ConfigKeyClock.authUrl, keyclockUrlEncoded).then((responseValKey) => {
+          return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseValKey) => {
             localStorage.setItem("access_token", responseValKey.access_token);
             localStorage.setItem("refresh_token", responseValKey.refresh_token);
             return Promise.resolve({
