@@ -1,6 +1,6 @@
 import { ConfigKeyCloak } from "./webpack.config";
 
-export const keyCloakUserInfo = (token: string) => {
+export const keyCloakUserInfo = (token) => {
   const userInfoUrl = ConfigKeyCloak.authUrl + ConfigKeyCloak.realm + ConfigKeyCloak.userInfoUrl;
 
   return fetchAction(userInfoUrl, token).then((responseVal) => {
@@ -20,7 +20,7 @@ export const keyCloakUserInfo = (token: string) => {
 };
 
 
-const fetchAction = (url: string, token: string) => {
+const fetchAction = (url, token) => {
   const request = new Request(url, {
     method: "GET",
     headers: new Headers({

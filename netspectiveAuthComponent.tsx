@@ -1,14 +1,7 @@
-import React from 'react';
 import { keyCloakUserInfo } from "./keyCloakUserInfo";
 import { ConfigGitLab, ConfigKeyCloak } from "./webpack.config";
 
-interface IParam {
-  username: string,
-  password: string,
-  authProvider: string,
-  type: string
-}
-export const netspectiveAuthentication = (parms : IParam) => {
+export const netspectiveAuthentication = (parms) => {
   const { username, password, authProvider, type } = parms;
   const authUrl = ConfigKeyCloak.authUrl + ConfigKeyCloak.realm + ConfigKeyCloak.tokenUrl;
 
@@ -208,7 +201,7 @@ export const netspectiveAuthentication = (parms : IParam) => {
 };
 
 
-const fetchAction = (url : string, urlencoded : URLSearchParams) => {
+const fetchAction = (url, urlencoded) => {
   const request = new Request(url, {
     method: "POST",
     body: urlencoded,
