@@ -73,7 +73,7 @@ export const netspectiveAuthentication = (parms) => {
           keycloakUrlEncoded.append("username", username);
           keycloakUrlEncoded.append("password", password);
           keycloakUrlEncoded.append("grant_type", "password");
-          fetchAction(authUrl, keycloakUrlEncoded).then((responseVal) => {
+          return fetchAction(authUrl, keycloakUrlEncoded).then((responseVal) => {
             if (responseVal.statusText) {
               return Promise.resolve({
                 status: responseVal.status,
