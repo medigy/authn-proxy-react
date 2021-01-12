@@ -1,4 +1,4 @@
 export {
   netspectiveAuthentication,
   netspectiveAuthLogout
-} from "./NetspectiveAuthComponent";
+} from "./netspectiveAuthComponent";

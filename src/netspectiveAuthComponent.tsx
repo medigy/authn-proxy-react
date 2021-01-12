@@ -1,8 +1,16 @@
+import React from 'react';
+import { keyCloakUserInfo } from "./keyCloakUserInfo";
 import { ConfigGitLab, ConfigKeyCloak } from "./webpack.config";
-let responseVal = {};
-export const netspectiveAuthentication = (parms) => {
-  // gitlab
+
+interface IParam {
+  username: string,
+  password: string,
+  authProvider: string,
+  type: string
+}
+export const netspectiveAuthentication = (parms : IParam) => {
   const { username, password, authProvider, type } = parms;
+  const authUrl = ConfigKeyCloak.authUrl + ConfigKeyCloak.realm + ConfigKeyCloak.tokenUrl;
 
   var urlencoded = new URLSearchParams();
   var keycloakUrlEncoded = new URLSearchParams();
@@ -72,7 +80,7 @@ export const netspectiveAuthentication = (parms) => {
           keycloakUrlEncoded.append("username", username);
           keycloakUrlEncoded.append("password", password);
           keycloakUrlEncoded.append("grant_type", "password");
-          return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseVal) => {
+          return fetchAction(authUrl, keycloakUrlEncoded).then((responseVal) => {
             if (responseVal.statusText) {
               return Promise.resolve({
                 status: responseVal.status,
@@ -81,9 +89,13 @@ export const netspectiveAuthentication = (parms) => {
             } else {
               localStorage.setItem("access_token", responseVal.access_token);
               localStorage.setItem("refresh_token", responseVal.refresh_token);
-              return Promise.resolve({
-                status: 200,
-                message: "login_successful"
+              keyCloakUserInfo(responseVal.access_token).then(async (getReponse) => {
+                if (getReponse.message === 'get_userInfo_success') {
+                  return await Promise.resolve({
+                    status: 200,
+                    message: "login_successful"
+                  });
+                }
               });
             }
           });
@@ -99,7 +111,7 @@ export const netspectiveAuthentication = (parms) => {
           "refresh_token",
           JSON.parse(localStorage.getItem("refresh_token") || '{}')
         );
-        return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseVal) => {
+        return fetchAction(authUrl, keycloakUrlEncoded).then((responseVal) => {
           if (responseVal.statusText) {
             return Promise.resolve({
               status: responseVal.status,
@@ -140,7 +152,7 @@ export const netspectiveAuthentication = (parms) => {
             localStorage.setItem("gitlab_access_token", responseValGit.access_token);
             localStorage.setItem("gitlab_id_token", responseValGit.id_token);
             localStorage.setItem("gitlab_refresh_token", responseValGit.refresh_token);
-            return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseValKey) => {
+            return fetchAction(authUrl, keycloakUrlEncoded).then((responseValKey) => {
               localStorage.setItem("access_token", responseValKey.access_token);
               localStorage.setItem("refresh_token", responseValKey.refresh_token);
               return Promise.resolve({
@@ -178,7 +190,7 @@ export const netspectiveAuthentication = (parms) => {
           localStorage.setItem("gitlab_access_token", responseValGit.access_token);
           localStorage.setItem("gitlab_id_token", responseValGit.id_token);
           localStorage.setItem("gitlab_refresh_token", responseValGit.refresh_token);
-          return fetchAction(ConfigKeyCloak.authUrl, keycloakUrlEncoded).then((responseValKey) => {
+          return fetchAction(authUrl, keycloakUrlEncoded).then((responseValKey) => {
             localStorage.setItem("access_token", responseValKey.access_token);
             localStorage.setItem("refresh_token", responseValKey.refresh_token);
             return Promise.resolve({
@@ -196,7 +208,7 @@ export const netspectiveAuthentication = (parms) => {
 };
 
 
-const fetchAction = (url, urlencoded) => {
+const fetchAction = (url : string, urlencoded : URLSearchParams) => {
   const request = new Request(url, {
     method: "POST",
     body: urlencoded,
