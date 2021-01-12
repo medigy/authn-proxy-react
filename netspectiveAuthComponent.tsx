@@ -1,4 +1,3 @@
-import { keyCloakUserInfo } from "./keyCloakUserInfo";
 import { ConfigGitLab, ConfigKeyCloak } from "./webpack.config";
 
 export const netspectiveAuthentication = (parms) => {
