@@ -4,6 +4,7 @@ import { ConfigGitLab, ConfigKeyCloak } from "./webpack.config";
 export const netspectiveAuthentication = (parms) => {
   const { username, password, authProvider, type } = parms;
   const authUrl = ConfigKeyCloak.authUrl + ConfigKeyCloak.realm + ConfigKeyCloak.tokenUrl;
+  const userInfoUrl = ConfigKeyCloak.authUrl + ConfigKeyCloak.realm + ConfigKeyCloak.userInfoUrl;
 
   var urlencoded = new URLSearchParams();
   var keycloakUrlEncoded = new URLSearchParams();
@@ -73,7 +74,7 @@ export const netspectiveAuthentication = (parms) => {
           keycloakUrlEncoded.append("username", username);
           keycloakUrlEncoded.append("password", password);
           keycloakUrlEncoded.append("grant_type", "password");
-          return fetchAction(authUrl, keycloakUrlEncoded).then((responseVal) => {
+          fetchAction(authUrl, keycloakUrlEncoded).then((responseVal) => {
             if (responseVal.statusText) {
               return Promise.resolve({
                 status: responseVal.status,
@@ -82,9 +83,15 @@ export const netspectiveAuthentication = (parms) => {
             } else {
               localStorage.setItem("access_token", responseVal.access_token);
               localStorage.setItem("refresh_token", responseVal.refresh_token);
-              keyCloakUserInfo(responseVal.access_token).then(async (getReponse) => {
-                if (getReponse.message === 'get_userInfo_success') {
-                  return await Promise.resolve({
+              return fetchActionKeyCloakUserInfo(userInfoUrl, responseVal.access_token).then((responseVal) => {
+                if (responseVal.statusText) {
+                  return Promise.resolve({
+                    status: responseVal.status,
+                    message: responseVal.statusText
+                  });
+                } else {
+                  localStorage.setItem("userInfo", JSON.stringify(responseVal));
+                  return Promise.resolve({
                     status: 200,
                     message: "login_successful"
                   });
@@ -219,7 +226,28 @@ const fetchAction = (url, urlencoded) => {
       return response.json();
     })
     .then((authResponse) => {
+      return authResponse;
+    });
+};
 
+const fetchActionKeyCloakUserInfo = (url, token) => {
+  const request = new Request(url, {
+    method: "GET",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      "Authorization": token && "bearer " + token
+    }),
+  });
+
+  return fetch(request)
+    .then((response) => {
+      if (response.status < 200 || response.status >= 300) {
+        return response;
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((authResponse) => {
       return authResponse;
     });
 };
