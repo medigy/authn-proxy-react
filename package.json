@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/medigy/authn-proxy-react#readme",
   "dependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "ts-loader": "^8.0.14"
   }
 }
