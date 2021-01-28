@@ -1,6 +1,6 @@
 {
   "name": "@medigy/authn-proxy-react",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Medigy login proxy for React apps",
   "main": "index.tsx",
   "scripts": {
@@ -20,10 +20,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^14.14.22",
     "typescript": "^3.9.6"
   },
   "bugs": {
     "url": "https://github.com/medigy/authn-proxy-react/issues"
   },
-  "homepage": "https://github.com/medigy/authn-proxy-react#readme"
+  "homepage": "https://github.com/medigy/authn-proxy-react#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
