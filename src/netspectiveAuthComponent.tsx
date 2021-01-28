@@ -16,18 +16,18 @@ interface IReturns {
 export const netspectiveAuthentication = (parms: IParms): Promise<IReturns> => {
 	const { username, password, authProvider, type } = parms;
 	const authUrl: string =
-		process.env.REACT_APP_KEYCLOAK_AUTHURL +
-		process.env.REACT_APP_KEYCLOAK_REALM +
-		process.env.REACT_APP_KEYCLOAK_TOKENURL;
+		String(process.env.REACT_APP_KEYCLOAK_AUTHURL) +
+		String(process.env.REACT_APP_KEYCLOAK_REALM) +
+		String(process.env.REACT_APP_KEYCLOAK_TOKENURL);
 	const userInfoUrl: string =
-		process.env.REACT_APP_KEYCLOAK_AUTHURL +
-		process.env.REACT_APP_KEYCLOAK_REALM +
-		process.env.REACT_APP_KEYCLOAK_USERINFOURL;
+		String(process.env.REACT_APP_KEYCLOAK_AUTHURL) +
+		String(process.env.REACT_APP_KEYCLOAK_REALM) +
+		String(process.env.REACT_APP_KEYCLOAK_USERINFOURL);
 
 	var urlencoded = new URLSearchParams();
 	var keycloakUrlEncoded = new URLSearchParams();
-	keycloakUrlEncoded.append('client_id', process.env.REACT_APP_KEYCLOAK_CLIENTID);
-	keycloakUrlEncoded.append('client_secret', process.env.REACT_APP_KEYCLOAK_CLIENTSECRET);
+	keycloakUrlEncoded.append('client_id', String(process.env.REACT_APP_KEYCLOAK_CLIENTID));
+	keycloakUrlEncoded.append('client_secret', String(process.env.REACT_APP_KEYCLOAK_CLIENTSECRET));
 
 	if (authProvider) {
 		if (authProvider === 'gitlab') {
@@ -37,7 +37,7 @@ export const netspectiveAuthentication = (parms: IParms): Promise<IReturns> => {
 					urlencoded.append('password', password);
 					urlencoded.append('grant_type', 'password');
 					urlencoded.append('scope', 'openid');
-					return fetchAction(process.env.REACT_APP_GITLAB_AUTHURL, urlencoded).then((responseVal) => {
+					return fetchAction(String(process.env.REACT_APP_GITLAB_AUTHURL), urlencoded).then((responseVal) => {
 						if (responseVal.statusText) {
 							return Promise.resolve({
 								status: Number(responseVal.status),
@@ -63,7 +63,7 @@ export const netspectiveAuthentication = (parms: IParms): Promise<IReturns> => {
 				urlencoded.append('grant_type', 'refresh_token');
 				urlencoded.append('scope', 'openid');
 				urlencoded.append('refresh_token', localStorage.getItem('refresh_token') || '{}');
-				return fetchAction(process.env.REACT_APP_GITLAB_AUTHURL, urlencoded).then((responseVal) => {
+				return fetchAction(String(process.env.REACT_APP_GITLAB_AUTHURL), urlencoded).then((responseVal) => {
 					if (responseVal.statusText) {
 						return Promise.resolve({
 							status: Number(responseVal.status),
@@ -162,7 +162,7 @@ export const netspectiveAuthentication = (parms: IParms): Promise<IReturns> => {
 				urlencoded.append('grant_type', 'password');
 				urlencoded.append('scope', 'openid');
 				keycloakUrlEncoded.append('grant_type', 'password');
-				return fetchAction(process.env.REACT_APP_GITLAB_AUTHURL, urlencoded).then((responseValGit) => {
+				return fetchAction(String(process.env.REACT_APP_GITLAB_AUTHURL), urlencoded).then((responseValGit) => {
 					if (responseValGit.statusText) {
 						return Promise.resolve({
 							status: Number(responseValGit.status),
@@ -194,7 +194,7 @@ export const netspectiveAuthentication = (parms: IParms): Promise<IReturns> => {
 			urlencoded.append('refresh_token', JSON.parse(localStorage.getItem('refresh_token') || '{}'));
 			keycloakUrlEncoded.append('grant_type', 'refresh_token');
 			keycloakUrlEncoded.append('refresh_token', JSON.parse(localStorage.getItem('refresh_token') || '{}'));
-			return fetchAction(process.env.REACT_APP_GITLAB_AUTHURL, urlencoded).then((responseValGit) => {
+			return fetchAction(String(process.env.REACT_APP_GITLAB_AUTHURL), urlencoded).then((responseValGit) => {
 				if (responseValGit.statusText) {
 					return Promise.resolve({
 						status: responseValGit.status,

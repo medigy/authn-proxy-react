@@ -1,34 +1,45 @@
 {
-  "name": "@medigy/authn-proxy-react",
-  "version": "1.1.2",
-  "description": "Medigy login proxy for React apps",
-  "main": "index.tsx",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/medigy"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/medigy/authn-proxy-react"
-  },
-  "keywords": [
-    "npm",
-    "authn-proxy-react"
-  ],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^14.14.22",
-    "typescript": "^3.9.6"
-  },
-  "bugs": {
-    "url": "https://github.com/medigy/authn-proxy-react/issues"
-  },
-  "homepage": "https://github.com/medigy/authn-proxy-react#readme",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "ts-loader": "^8.0.14"
-  }
+	"name": "@medigy/authn-proxy-react",
+	"version": "1.1.3",
+	"description": "Medigy login proxy for React apps",
+	"main": "build/index.js",
+	"module": "build/index.es.js",
+	"jsnext:main": "build/index.es.js",
+	"scripts": {
+		"build": "rollup -c",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"files": [
+		"build"
+	],
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/medigy"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/medigy/authn-proxy-react"
+	},
+	"keywords": [
+		"npm",
+		"authn-proxy-react"
+	],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "^14.14.22",
+		"rollup": "^2.38.0",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"rollup-plugin-node-resolve": "^5.2.0",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-typescript2": "^0.29.0",
+		"typescript": "^3.9.6"
+	},
+	"bugs": {
+		"url": "https://github.com/medigy/authn-proxy-react/issues"
+	},
+	"homepage": "https://github.com/medigy/authn-proxy-react#readme",
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"ts-loader": "^8.0.14"
+	}
 }
